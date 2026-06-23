@@ -76,12 +76,14 @@ WSGI_APPLICATION = 'oo.wsgi.application'
 
 
 
+import os
+
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://localhost'
+        default=os.environ.get('DATABASE_URL')
     )
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
