@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'oo.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://online_dokon_db_user:oHi0R2uKF9Bzx8CRrWahFltL...[qolgan qismi]'
+        default='postgresql://online_dokon_db_user:oHi0R2uKF9Bzx8CRrWahFltL...qolgan_haqiqiy_parol'
     )
 }
 
