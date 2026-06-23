@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sizning Savatchangiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">⬅️ Do'konga qaytish</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4 fw-bold">Savatdagi xarid narsalaringiz</h2>
+
+        {% if cart_items %}
+            <div class="card shadow-sm p-4">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Mahsulot</th>
+                            <th>Soni</th>
+                            <th>Narxi</th>
+                            <th>Jami</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                            <tr>
+                                <td class="fw-bold">{{ item.product.name }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm btn-outline-secondary fw-bold">-</a>
+                                        
+                                        <span class="mx-1 fw-bold">{{ item.quantity }} ta</span>
+                                        
+                                        {% if item.product.stock > item.quantity %}
+                                            <a href="{% url 'add_to_cart' item.product.id %}" class="btn btn-sm btn-outline-secondary fw-bold">+</a>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-outline-secondary fw-bold" disabled>+</button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>{{ item.product.price }} UZS</td>
+                                <td class="text-success fw-bold">{{ item.item_total }} UZS</td>
+                                <td>
+                                    <a href="{% url 'delete_from_cart' item.product.id %}" class="btn btn-sm btn-danger px-2 py-1" onclick="return confirm('Ushbu mahsulotni savatdan o\'chirmoqchimisiz?')">
+                                        🗑️ O'chirish
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h4>Umumiy hisob: <span class="text-success fw-bold">{{ total_price }} UZS</span></h4>
+                    <a href="{% url 'checkout' %}" class="btn btn-success btn-lg fw-bold px-4">Buyurtma berish</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <h4 class="text-muted">Savatchangiz bo'sh.</h4>
+                <a href="{% url 'home' %}" class="btn btn-primary mt-3">Xarid qilishni boshlash</a>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
