@@ -52,6 +52,9 @@ WSGI_APPLICATION = 'oo.wsgi.application'
 
 tmp_url = os.environ.get('DATABASE_URL')
 if tmp_url:
+    if tmp_url.startswith("postgresql://"):
+        tmp_url = tmp_url.replace("postgresql://", "postgres://", 1)
+        
     url = urlparse.urlparse(tmp_url)
     DATABASES = {
         'default': {
@@ -85,3 +88,5 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
